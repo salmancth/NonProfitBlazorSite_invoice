@@ -1,0 +1,28 @@
+
+@page "/"
+@inject NavigationManager Navigation
+
+<h1>Welcome to Our Non-Profit Organization</h1>
+<p>This is the official website of our organization where members can connect, share, and contribute to our mission.</p>
+
+<div>
+    <h3>Key Features</h3>
+    <ul>
+        <li>Register as a new member and join our community.</li>
+        <li>Post updates, images, and videos to share with others.</li>
+        <li>Chat with other members securely.</li>
+        <li>Pay your membership fees and track your invoices.</li>
+        <li>View upcoming events and contribute to discussions.</li>
+    </ul>
+</div>
+
+<h3>Quick Navigation</h3>
+<button @onclick="NavigateToRegister">Register</button>
+<button @onclick="NavigateToLogin">Login</button>
+<button @onclick="NavigateToInvoices">View Invoices</button>
+
+@code {
+    private void NavigateToRegister() => Navigation.NavigateTo("/register");
+    private void NavigateToLogin() => Navigation.NavigateTo("/login");
+    private void NavigateToInvoices() => Navigation.NavigateTo("/invoices");
+}

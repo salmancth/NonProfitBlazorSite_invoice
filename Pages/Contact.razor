@@ -1,0 +1,41 @@
+
+@page "/contact"
+
+<h1>Contact Us</h1>
+<p>We'd love to hear from you! Please reach out to us using the following contact details:</p>
+
+<ul>
+    <li>Email: contact@nonprofit.org</li>
+    <li>Phone: +123-456-7890</li>
+</ul>
+
+<h3>Leave a Message</h3>
+<EditForm Model="@messageModel" OnValidSubmit="SubmitMessage">
+    <InputText @bind-Value="messageModel.Name" placeholder="Your Name" />
+    <InputText @bind-Value="messageModel.Email" placeholder="Your Email" />
+    <InputTextArea @bind-Value="messageModel.Message" placeholder="Your Message" rows="5" />
+    <button type="submit">Send</button>
+</EditForm>
+
+@if (isSubmitted)
+{
+    <p>Your message has been sent. Thank you for reaching out!</p>
+}
+
+@code {
+    private ContactMessage messageModel = new();
+    private bool isSubmitted = false;
+
+    private void SubmitMessage()
+    {
+        // Placeholder for message submission logic (e.g., save to database)
+        isSubmitted = true;
+    }
+
+    public class ContactMessage
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Message { get; set; }
+    }
+}
