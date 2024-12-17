@@ -1,0 +1,61 @@
+
+@page "/invoices"
+@inject HttpClient Http
+
+<h3>Your Invoices</h3>
+<button @onclick="FetchInvoices">Load My Invoices</button>
+
+@if (invoices?.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in invoices)
+            {
+                <tr>
+                    <td>@invoice.InvoiceNumber</td>
+                    <td>@invoice.Amount</td>
+                    <td>@invoice.InvoiceDate.ToShortDateString()</td>
+                    <td>@(invoice.IsPaid ? "Paid" : "Unpaid")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (isLoading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>No invoices found.</p>
+}
+
+@code {
+    private List<Invoice> invoices = new();
+    private bool isLoading = false;
+
+    private async Task FetchInvoices()
+    {
+        isLoading = true;
+        var memberId = 1; // Replace with dynamic member ID
+        var response = await Http.GetFromJsonAsync<List<Invoice>>($"api/invoice/list/{memberId}");
+        invoices = response ?? new List<Invoice>();
+        isLoading = false;
+    }
+
+    public class Invoice
+    {
+        public string InvoiceNumber { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime InvoiceDate { get; set; }
+        public bool IsPaid { get; set; }
+    }
+}
